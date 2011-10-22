@@ -237,7 +237,6 @@ static int android_bind_config(struct usb_configuration *c)
 {
 	struct android_dev *dev = _android_dev;
 
-	CSY_DBG2("_registered_function_count=%d, dev->num_functions=%d\n", _registered_function_count, dev->num_functions);
 	printk(KERN_DEBUG "android_bind_config\n");
 	dev->config = c;
 
@@ -269,6 +268,9 @@ static struct usb_configuration android_config_driver = {
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
 /* soonyong.cho : This value of max power is referred from S1 */
 	.bMaxPower	= 0x30, /* 96ma */
+#elif CONFIG_MACH_C1
+/* soonyong.cho : This value of max power is referred from S1 */
+	.bMaxPower  = 0x30, /* 96ma */
 #else /* original */
 	.bMaxPower	= 0xFA, /* 500ma */
 #endif /* CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE */
@@ -461,7 +463,7 @@ void android_register_function(struct android_usb_function *f)
 	printk(KERN_INFO "android_register_function %s\n", f->name);
 	list_add_tail(&f->list, &_functions);
 
-	CSY_DBG("name=%s, registered_function_count=%d, dev->num_functions=%d\n",f->name, _registered_function_count, dev->num_functions);
+	CSY_DBG("name=%s, dev->num_functions=%d\n",f->name, dev->num_functions);
 	if (dev && should_bind_functions(dev))
 		bind_functions(dev);
 #ifdef CONFIG_USB_ANDROID_SAMSUNG_COMPOSITE
@@ -658,6 +660,8 @@ void android_enable_function(struct usb_function *f, int enable)
 {
 	struct android_dev *dev = _android_dev;
 	int disable = !enable;
+	
+		CSY_DBG_ESS("++ f->name=%s enable=%d\n", f->name, enable);
 
 	if (!!f->disabled != disable) {
 		usb_function_set_enabled(f, !disable);
