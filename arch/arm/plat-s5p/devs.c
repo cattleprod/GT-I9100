@@ -923,6 +923,7 @@ EXPORT_SYMBOL(s3c_device_usb_otghcd);
 #include <linux/usb/android_composite.h>
 #include <linux/usb/f_accessory.h>
 
+<<<<<<< HEAD
 #define S3C_VENDOR_ID      0x18d1
 #define S3C_UMS_PRODUCT_ID    0x4E21
 #define S3C_UMS_ADB_PRODUCT_ID    0x4E22
@@ -931,6 +932,16 @@ EXPORT_SYMBOL(s3c_device_usb_otghcd);
 #define S3C_RNDIS_UMS_ADB_PRODUCT_ID  0x4E25
 
 #define MAX_USB_SERIAL_NUM  17
+=======
+#define S3C_VENDOR_ID			0x18d1
+#define S3C_UMS_PRODUCT_ID		0x4E21
+#define S3C_UMS_ADB_PRODUCT_ID		0x4E22
+#define S3C_RNDIS_PRODUCT_ID		0x4E23
+#define S3C_RNDIS_ADB_PRODUCT_ID	0x4E24
+#define S3C_RNDIS_UMS_ADB_PRODUCT_ID	0x4E25
+
+#define MAX_USB_SERIAL_NUM	17
+>>>>>>> 3a3d81d... USB tethering support, dual sdcard mounting support
 
 static char *usb_functions_ums[] = {
 	"usb_mass_storage",
@@ -944,12 +955,18 @@ static char *usb_functions_rndis_adb[] = {
 	"rndis",
 	"adb",
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a3d81d... USB tethering support, dual sdcard mounting support
 static char *usb_functions_ums_adb[] = {
 	"usb_mass_storage",
 	"adb",
 };
+<<<<<<< HEAD
 
+=======
+>>>>>>> 3a3d81d... USB tethering support, dual sdcard mounting support
 static char *usb_functions_accessory[] = {
 	"accessory",
 };
@@ -972,10 +989,17 @@ static char *usb_functions_all[] = {
 	"adb",
 #endif
 #ifdef CONFIG_USB_ANDROID_MTP
+<<<<<<< HEAD
 	"mtp",
 #endif
 #ifdef CONFIG_USB_ANDROID_ACM
 	"acm",
+=======
+    "mtp",
+#endif
+#ifdef CONFIG_USB_ANDROID_ACM
+    "acm",
+>>>>>>> 3a3d81d... USB tethering support, dual sdcard mounting support
 #endif
 };
 
@@ -1021,9 +1045,15 @@ static char device_serial[MAX_USB_SERIAL_NUM]="0123456789ABCDEF";
 // Information should be changed as real product for commercial release
 static struct android_usb_platform_data android_usb_pdata = {
 	.vendor_id		= S3C_VENDOR_ID,
+<<<<<<< HEAD
 	.product_id    = S3C_UMS_PRODUCT_ID,
 	.manufacturer_name  = "Samsung",
 	.product_name    = "Galaxy S2",
+=======
+	.product_id		= S3C_UMS_PRODUCT_ID,
+	.manufacturer_name	= "Samsung",
+	.product_name		= "Galaxy S2",
+>>>>>>> 3a3d81d... USB tethering support, dual sdcard mounting support
 	.serial_number		= device_serial,
 	.num_products		= ARRAY_SIZE(usb_products),
 	.products		= usb_products,
@@ -1041,8 +1071,13 @@ struct platform_device s3c_device_android_usb = {
 EXPORT_SYMBOL(s3c_device_android_usb);
 
 static struct usb_mass_storage_platform_data ums_pdata = {
+<<<<<<< HEAD
 	.vendor      = "Android   ",
 	.product    = "UMS Composite",
+=======
+	.vendor			= "Android   ",
+	.product		= "UMS Composite",
+>>>>>>> 3a3d81d... USB tethering support, dual sdcard mounting support
 	.release		= 1,
 	.nluns			= 1,
 };
