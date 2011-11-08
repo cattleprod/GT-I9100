@@ -106,7 +106,7 @@ struct busfreq_table {
 };
 
 static struct busfreq_table s5pv310_busfreq_table[] = {
-	{LV_0, 300000, 1000000},
+	{LV_0, 400000, 1100000},
 	{LV_1, 267000, 1000000},
 	{LV_2, 133000, 1000000},
 	{0, 0, 0},

@@ -81,7 +81,7 @@ void __iomem *dac_base;
 
 #define ARMCLOCK_1200MHZ		1200000
 #define ARMCLOCK_1000MHZ		1000000
-#define ARMCLOCK_400MHZ			 400000
+#define ARMCLOCK_500MHZ			 500000
 
 static int s5pv310_max_armclk;
 
@@ -106,8 +106,8 @@ static struct cpufreq_frequency_table s5pv310_lookup_freq_table[] = {
 	{L0, 1200*1000},
 	{L1, 1000*1000},
 	{L2, 800*1000},
-	{L3, 400*1000},
-	{L4, 100*1000},
+	{L3, 500*1000},
+	{L4, 200*1000},
 	{0, CPUFREQ_TABLE_END},
 };
 
@@ -158,9 +158,9 @@ static struct cpufreq_frequency_table s5pv310_freq_table[] = {
 	{L0, 1200*1000},
 	{L1, 1000*1000},
 	{L2, 800*1000},
-	{L3, 400*1000},
+	{L3, 500*1000},
 #if !defined(CONFIG_MACH_Q1_REV00) && !defined(CONFIG_MACH_Q1_REV02)
-	{L4, 100*1000},
+	{L4, 200*1000},
 #endif
 	{0, CPUFREQ_TABLE_END},
 };
@@ -218,7 +218,7 @@ struct busfreq_table {
 	unsigned int volt;
 };
 static struct busfreq_table s5pv310_busfreq_table[] = {
-	{LV_0, 300000, 1100000},
+	{LV_0, 400000, 1100000},
 	{LV_1, 267000, 1000000},
 #if !defined(CONFIG_MACH_Q1_REV00) && !defined(CONFIG_MACH_Q1_REV02)
 	{LV_2, 133000, 1000000},
@@ -675,10 +675,10 @@ static unsigned int s5pv310_lookup_apll_pms_table[CPUFREQ_LEVEL_END] = {
 	((200<<16)|(6<<8)|(0x1)),
 
 	/* APLL FOUT L3: 400MHz */
-	((200<<16)|(6<<8)|(0x2)),
+	((250<<16)|(6<<8)|(0x2)),
 
 	/* APLL FOUT L4: 100MHz */
-	((200<<16)|(6<<8)|(0x4)),
+	((200<<16)|(6<<8)|(0x3)),
 };
 
 #ifdef CONFIG_CPU_S5PV310_EVT1
@@ -742,10 +742,10 @@ static unsigned int s5pv310_apll_pms_table[CPUFREQ_LEVEL_END] = {
 	((200<<16)|(6<<8)|(0x1)),
 
 	/* APLL FOUT L3: 400MHz */
-	((200<<16)|(6<<8)|(0x2)),
+	((250<<16)|(6<<8)|(0x2)),
 
 	/* APLL FOUT L4: 100MHz */
-	((200<<16)|(6<<8)|(0x4)),
+	((200<<16)|(6<<8)|(0x3)),
 };
 #else
 static struct cpufreq_voltage_table s5pv310_volt_table[CPUFREQ_LEVEL_END] = {
@@ -1067,7 +1067,7 @@ void s5pv310_set_frequency(unsigned int old_index, unsigned int new_index)
 			s5pv310_set_clkdiv(new_index);
 
 			/* 2. Change the apll m,p,s value */
-			if (freqs.new == ARMCLOCK_400MHZ) {
+			if (freqs.new == ARMCLOCK_500MHZ) {
 				regulator_set_voltage(arm_regulator,
 					s5pv310_volt_table[new_index - 1].arm_volt,
 					s5pv310_volt_table[new_index - 1].arm_volt);
@@ -1123,7 +1123,7 @@ void s5pv310_set_frequency(unsigned int old_index, unsigned int new_index)
 			s5pv310_set_clkdiv(new_index);
 		} else {
 			/* Clock Configuration Procedure */
-			if (freqs.old == ARMCLOCK_400MHZ) {
+			if (freqs.old == ARMCLOCK_500MHZ) {
 				regulator_set_voltage(arm_regulator,
 					s5pv310_volt_table[new_index - 2].arm_volt,
 					s5pv310_volt_table[new_index - 2].arm_volt);
@@ -2358,10 +2358,10 @@ static void s5pv310_asv_set_voltage(void)
 	case 800000:
 		asv_arm_index = 2;
 		break;
-	case 400000:
+	case 500000:
 		asv_arm_index = 3;
 		break;
-	case 100000:
+	case 200000:
 		asv_arm_index = 4;
 		break;
 	}
@@ -2382,7 +2382,7 @@ static void s5pv310_asv_set_voltage(void)
 	rate = s5pv310_getspeed_dmc(0);
 
 	switch (rate) {
-	case 300000:
+	case 400000:
 		asv_int_index = 0;
 		break;
 	case 266666:
