@@ -16,7 +16,7 @@ ROOTFS_PATH="/home/legend/android/initramfs/HK3/"
 echo "Cleaning latest build"
 make ARCH=arm CROSS_COMPILE=$TOOLCHAIN -j`grep 'processor' /proc/cpuinfo | wc -l` clean
 
-cp -f $KERNEL_PATH/arch/arm/configs/XCeLL-defconfig $KERNEL_PATH/.config
+cp -f $KERNEL_PATH/arch/arm/configs/c1_rev02_defconfig $KERNEL_PATH/.config
 
 make -j4 -C $KERNEL_PATH xconfig || exit -1
 make -j4 -C $KERNEL_PATH ARCH=arm CROSS_COMPILE=$TOOLCHAIN || exit -1
