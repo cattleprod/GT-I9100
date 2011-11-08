@@ -434,6 +434,7 @@ config TREE_RCU_TRACE
 	  TREE_PREEMPT_RCU implementations, permitting Makefile to
 	  trivially select kernel/rcutree_trace.c.
 
+<<<<<<< HEAD
 config SRCU_SYNCHRONIZE_DELAY
 	int "Microseconds to delay before waiting for readers"
 	range 0 20
@@ -446,8 +447,6 @@ config SRCU_SYNCHRONIZE_DELAY
 	  in a manner similar to adaptive locking schemes.  This should
 	  be set to be a bit longer than the common-case SRCU read-side
 	  critical-section overhead.
-
-	  Accept the default if unsure.
 
 endmenu # "RCU Subsystem"
 
