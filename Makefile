@@ -189,7 +189,7 @@ SUBARCH := $(shell uname -m | sed -e s/i.86/i386/ -e s/sun4u/sparc64/ \
 # Note: Some architectures assign CROSS_COMPILE in their arch/*/Makefile
 export KBUILD_BUILDHOST := $(SUBARCH)
 ARCH		?= arm
-CROSS_COMPILE	?= /opt/toolchains/arm-2009q3/bin/arm-none-linux-gnueabi-
+CROSS_COMPILE	?= arm-linux-gnueabi-
 CROSS_COMPILE	?= $(CONFIG_CROSS_COMPILE:"%"=%)
 
 # Architecture as present in compile.h
@@ -333,10 +333,10 @@ CHECK		= sparse
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
 MODFLAGS	= -DMODULE
-CFLAGS_MODULE   = $(MODFLAGS) -finline-functions -ftree-loop-linear -floop-strip-mine -floop-block -fpredictive-commoning
+CFLAGS_MODULE   = $(MODFLAGS) -fgcse-sm -fno-inline-small-functions -fno-tree-vectorize
 AFLAGS_MODULE   = $(MODFLAGS)
 LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
-CFLAGS_KERNEL	= -finline-functions -ftree-loop-linear -floop-strip-mine -floop-block -fpredictive-commoning
+CFLAGS_KERNEL	= -fgcse-sm -fno-inline-small-functions -fno-tree-vectorize
 AFLAGS_KERNEL	=
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
@@ -355,6 +355,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
 		   -mtune=cortex-a9 -march=armv7-a \
+		   -floop-interchange -floop-strip-mine -floop-block \
 		   -mfpu=vfpv3 -mfloat-abi=hard
 #change@wtl.kSingh - enabling FIPS mode - starts
 ifeq ($(USE_SEC_FIPS_MODE),true)
@@ -538,7 +539,7 @@ endif # $(dot-config)
 all: vmlinux
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -O1
+KBUILD_CFLAGS	+= -O3
 else
 KBUILD_CFLAGS	+= -O2
 endif
@@ -557,18 +558,18 @@ endif
 # This warning generated too much noise in a regular build.
 KBUILD_CFLAGS += $(call cc-disable-warning, unused-but-set-variable)
 
-ifdef CONFIG_FRAME_POINTER
-KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
-else
+#ifdef CONFIG_FRAME_POINTER
+#KBUILD_CFLAGS	+= -fno-omit-frame-pointer -fno-optimize-sibling-calls
+#else
 # Some targets (ARM with Thumb2, for example), can't be built with frame
 # pointers.  For those, we don't have FUNCTION_TRACER automatically
 # select FRAME_POINTER.  However, FUNCTION_TRACER adds -pg, and this is
 # incompatible with -fomit-frame-pointer with current GCC, so we don't use
 # -fomit-frame-pointer with FUNCTION_TRACER.
-ifndef CONFIG_FUNCTION_TRACER
-KBUILD_CFLAGS	+= -fomit-frame-pointer
-endif
-endif
+#ifndef CONFIG_FUNCTION_TRACER
+#KBUILD_CFLAGS	+= -fomit-frame-pointer
+#endif
+#endif
 
 ifdef CONFIG_DEBUG_INFO
 KBUILD_CFLAGS	+= -g
