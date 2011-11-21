@@ -333,10 +333,10 @@ CHECK		= sparse
 CHECKFLAGS     := -D__linux__ -Dlinux -D__STDC__ -Dunix -D__unix__ \
 		  -Wbitwise -Wno-return-void $(CF)
 MODFLAGS	= -DMODULE
-CFLAGS_MODULE   = $(MODFLAGS) -fgcse-sm -fno-inline-small-functions -fno-tree-vectorize
+CFLAGS_MODULE   = $(MODFLAGS) -ftree-vectorize -funsafe-math-optimizations
 AFLAGS_MODULE   = $(MODFLAGS)
 LDFLAGS_MODULE  = -T $(srctree)/scripts/module-common.lds
-CFLAGS_KERNEL	= -fgcse-sm -fno-inline-small-functions -fno-tree-vectorize
+CFLAGS_KERNEL	= -ftree-vectorize -funsafe-math-optimizations
 AFLAGS_KERNEL	=
 CFLAGS_GCOV	= -fprofile-arcs -ftest-coverage
 
@@ -355,8 +355,7 @@ KBUILD_CFLAGS   := -Wall -Wundef -Wstrict-prototypes -Wno-trigraphs \
 		   -Wno-format-security \
 		   -fno-delete-null-pointer-checks \
 		   -mtune=cortex-a9 -march=armv7-a \
-		   -floop-interchange -floop-strip-mine -floop-block \
-		   -mfpu=vfpv3 -mfloat-abi=hard
+		   -mfpu=vfpv3-d16 -mfloat-abi=hard
 #change@wtl.kSingh - enabling FIPS mode - starts
 ifeq ($(USE_SEC_FIPS_MODE),true)
 KBUILD_CFLAGS += -DSEC_FIPS_ENABLED
@@ -539,7 +538,7 @@ endif # $(dot-config)
 all: vmlinux
 
 ifdef CONFIG_CC_OPTIMIZE_FOR_SIZE
-KBUILD_CFLAGS	+= -O3
+KBUILD_CFLAGS	+= -O1
 else
 KBUILD_CFLAGS	+= -O2
 endif
