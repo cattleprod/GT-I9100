@@ -357,7 +357,6 @@ static struct s3c2410_uartcfg smdkc210_uartcfgs[] __initdata = {
 		.ulcon		= SMDKC210_ULCON_DEFAULT,
 		.ufcon		= SMDKC210_UFCON_DEFAULT,
 		.cfg_gpio	= s3c_setup_uart_cfg_gpio,
-		.wake_peer	= c1_bt_uart_wake_peer,
 	},
 	[1] = {
 		.hwport		= 1,
@@ -5724,14 +5723,12 @@ static struct platform_device *smdkc210_devices[] __initdata = {
 #ifdef CONFIG_USB_GADGET
 	&s3c_device_usbgadget,
 #endif
-#ifdef CONFIG_USB_ANDROID
-	&s3c_device_android_usb,
-#ifdef CONFIG_USB_ANDROID_MASS_STORAGE
-	&s3c_device_usb_mass_storage,
-#endif
 #ifdef CONFIG_USB_ANDROID_RNDIS
 	&s3c_device_rndis,
 #endif
+#ifdef CONFIG_USB_ANDROID
+	&s3c_device_android_usb,
+	&s3c_device_usb_mass_storage,
 #endif
 #ifdef CONFIG_USB_S3C_OTG_HOST
 	&s3c_device_usb_otghcd,
@@ -6269,8 +6266,6 @@ static void __init smdkc210_machine_init(void)
 	s3c_usb_set_serial();
 /* Changes value of nluns in order to use external storage */
 	usb_device_init();
-#else
-	s3c_usb_otg_composite_pdata(&fb_platform_data);
 #endif
 
 /* klaatu: semaphore logging code - for debug  */
@@ -6430,7 +6425,11 @@ static void __init s5pv310_reserve(void)
 }
 #endif
 
+<<<<<<< HEAD
 MACHINE_START(C1, "SMDKC210")
+=======
+MACHINE_START(C1, "SMDKV310")
+>>>>>>> 75e9403... REVERTED
 	/* Maintainer: Kukjin Kim <kgene.kim@samsung.com> */
 	.phys_io	= S3C_PA_UART & 0xfff00000,
 	.io_pg_offst	= (((u32)S3C_VA_UART) >> 18) & 0xfffc,
@@ -6441,7 +6440,11 @@ MACHINE_START(C1, "SMDKC210")
 	.timer		= &s5pv310_timer,
 MACHINE_END
 
+<<<<<<< HEAD
 MACHINE_START(SMDKC210, "SMDKC210")
+=======
+MACHINE_START(SMDKC210, "SMDKV310")
+>>>>>>> 75e9403... REVERTED
 	/* Maintainer: Kukjin Kim <kgene.kim@samsung.com> */
 	.phys_io	= S3C_PA_UART & 0xfff00000,
 	.io_pg_offst	= (((u32)S3C_VA_UART) >> 18) & 0xfffc,
