@@ -218,10 +218,10 @@ struct busfreq_table {
 	unsigned int volt;
 };
 static struct busfreq_table s5pv310_busfreq_table[] = {
-	{LV_0, 400000, 1100000},
-	{LV_1, 267000, 1000000},
+	{LV_0, 400000, 1000000},
+	{LV_1, 267000, 900000},
 #if !defined(CONFIG_MACH_Q1_REV00) && !defined(CONFIG_MACH_Q1_REV02)
-	{LV_2, 133000, 1000000},
+	{LV_2, 133000, 900000},
 #endif
 	{0, 0, 0},
 };

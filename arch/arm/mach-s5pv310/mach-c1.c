@@ -2255,7 +2255,7 @@ REGULATOR_INIT(ldo12, "VT_CAM_1.8V", 1800000, 1800000, 0,
 REGULATOR_INIT(ldo13, "VCC_3.0V_LCD", 3300000, 3300000, 1,
 		REGULATOR_CHANGE_STATUS, 0);
 #else
-REGULATOR_INIT(ldo13, "VCC_3.0V_LCD", 3000000, 3000000, 1,
+REGULATOR_INIT(ldo13, "VCC_3.0V_LCD", 2500000, 2500000, 1,
 		REGULATOR_CHANGE_STATUS, 1);
 #endif
 REGULATOR_INIT(ldo14, "VCC_2.8V_MOTOR", 2800000, 2800000, 0,
@@ -2273,7 +2273,7 @@ REGULATOR_INIT(ldo17_rev04, "VTF_2.8V", 2800000, 2800000, 0,
 REGULATOR_INIT(ldo17, "CAM_AF_2.8V", 2800000, 2800000, 0,
 		REGULATOR_CHANGE_STATUS, 1);
 #endif
-REGULATOR_INIT(ldo18, "TOUCH_LED_3.3V", 3000000, 3300000, 0,
+REGULATOR_INIT(ldo18, "TOUCH_LED_3.3V", 2500000, 2800000, 0,
 		REGULATOR_CHANGE_STATUS | REGULATOR_CHANGE_VOLTAGE, 1);
 
 REGULATOR_INIT(ldo21, "VDDQ_M1M2_1.2V", 1200000, 1200000, 1,
@@ -2282,7 +2282,7 @@ REGULATOR_INIT(ldo21, "VDDQ_M1M2_1.2V", 1200000, 1200000, 1,
 static struct regulator_init_data buck1_init_data = {
 	.constraints	= {
 		.name		= "vdd_arm range",
-		.min_uV		= 650000,
+		.min_uV		= 550000,
 		.max_uV		= 2225000,
 		.always_on	= 1,
 		.boot_on	= 1,
@@ -2301,7 +2301,7 @@ static struct regulator_init_data buck1_init_data = {
 static struct regulator_init_data buck2_init_data = {
 	.constraints	= {
 		.name		= "vdd_int range",
-		.min_uV		= 650000,
+		.min_uV		= 550000,
 		.max_uV		= 2225000,
 		.always_on	= 1,
 		.boot_on	= 1,
