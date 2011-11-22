@@ -9,7 +9,7 @@ TAR_NAME=zImage.tar
 
 TOOLCHAIN="/home/legend/android/toolchains/4.5.4/android-toolchain-eabi/bin/arm-eabi-"
 # TOOLCHAIN="/home/neophyte-x360/toolchain/bin/arm-none-eabi-"
-ROOTFS_PATH="/home/legend/android/initramfs/HK3/"
+ROOTFS_PATH="/home/legend/android/initramfs/miui-initramfs-x/"
 
 
 
